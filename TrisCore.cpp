@@ -90,13 +90,15 @@ void tris::gameStart() {
 
 void tris::play() {
 	short temp;
+	short *temp2;
 	if (tris::turn) {
 		do
 		{
 			std::cout << "GIOCATORE 1 (O): dove vuoi posizionare la tua O (Numero compreso tra 1 e 9)?" << std::endl;
 			std::cin >> temp;
-		} while (tris::game[temp] == 0);
-		tris::game[temp - 1] = 1;
+			temp2 = &tris::game[temp - 1];
+		} while ((temp < 1 || temp > 9) || *temp2 != 0);
+		*temp2 = 1;
 		tris::turn = false;
 	}
 	else
@@ -104,12 +106,10 @@ void tris::play() {
 		do
 		{
 			std::cout << "GIOCATORE 2 (X): dove vuoi posizionare la tua X (Numero compreso tra 1 e 9)?" << std::endl;
-			do
-			{
 			std::cin >> temp;
-			} while (temp < 1 || temp > 9);
-		} while (tris::game[temp] != 0);
-		tris::game[temp - 1] = 2;
+			temp2 = &tris::game[temp - 1];
+			} while ((temp < 1 || temp > 9) || *temp2 != 0);
+		*temp2 = 2;
 		tris::turn = true;
 	}
 }
