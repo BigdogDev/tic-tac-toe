@@ -3,12 +3,16 @@
 
 short tris::game[DIM] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 bool tris::turn = true;
+short tris::moves = 0;
 
-void initializeGame() {
+void tris::initializeGame() {
 	for (int i = 0; i < 9; i++)
 	{
 		tris::game[i] = 0;
 	}
+	std::cout << "Draw, the game will restart" << std::endl << std::endl;
+	tris::turn = false;
+	tris::moves = 0;
 }
 
 void tris::printGame() {
@@ -94,8 +98,9 @@ void tris::play() {
 	if (tris::turn) {
 		do
 		{
-			std::cout << "GIOCATORE 1 (O): dove vuoi posizionare la tua O (Numero compreso tra 1 e 9)?" << std::endl;
+			std::cout << "PLAYER O: where would you like to position your sign (Number included from 1 to 9)?" << std::endl;
 			std::cin >> temp;
+			std::cout << std::endl;
 			temp2 = &tris::game[temp - 1];
 		} while ((temp < 1 || temp > 9) || *temp2 != 0);
 		*temp2 = 1;
@@ -105,11 +110,31 @@ void tris::play() {
 	{
 		do
 		{
-			std::cout << "GIOCATORE 2 (X): dove vuoi posizionare la tua X (Numero compreso tra 1 e 9)?" << std::endl;
+			std::cout << "PLAYER X: where would you like to position your sign (Number included from 1 to 9)?" << std::endl;
 			std::cin >> temp;
+			std::cout << std::endl;
 			temp2 = &tris::game[temp - 1];
 			} while ((temp < 1 || temp > 9) || *temp2 != 0);
 		*temp2 = 2;
 		tris::turn = true;
+	}
+}
+
+void tris::winCheck() {
+	if (WINCOND1)
+	{
+		std::cout << "Player O has won!" << std::endl;
+		exit(0);
+	}
+	else if (WINCOND2) {
+		std::cout << "Player X has won!" << std::endl;
+		exit(0);
+	}
+	else if (tris::moves == 8) {
+		tris::initializeGame();
+		tris::printGame();
+	}
+	else {
+		tris::moves++;
 	}
 }
