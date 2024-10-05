@@ -31,10 +31,7 @@ void tris::printGame() {
 				std::cout << "  ";
 				break;
 			}
-			std::cout << std::endl;
-			std::cout << "-----------";
-			std::cout << std::endl;
-			std::cout << " ";
+			std::cout << std::endl << "-----------" << std::endl << " ";
 		}
 		else if (i == 8)
 		{
@@ -94,28 +91,43 @@ void tris::gameStart() {
 void tris::play() {
 	short temp;
 	short *temp2;
+	bool done = false;
 	if (tris::turn) {
 		do
 		{
-			std::cout << "PLAYER O: where would you like to position your sign (Number included from 1 to 9)?" << std::endl;
+			if (done) {
+				std::cout << "Invalid position, retry:" << std::endl << std::endl;
+			}
+			else {
+				std::cout << "PLAYER O: where would you like to position your sign (Number included from 1 to 9)?" << std::endl;
+			}
 			std::cin >> temp;
 			std::cout << std::endl;
 			temp2 = &tris::game[temp - 1];
+			done = true;
 		} while ((temp < 1 || temp > 9) || *temp2 != 0);
 		*temp2 = 1;
 		tris::turn = false;
+		done = false;
 	}
 	else
 	{
 		do
 		{
-			std::cout << "PLAYER X: where would you like to position your sign (Number included from 1 to 9)?" << std::endl;
+			if (done) {
+				std::cout << "Invalid position, retry: " << std::endl << std::endl;
+			}
+			else {
+				std::cout << "PLAYER X: where would you like to position your sign (Number included from 1 to 9)?" << std::endl;
+			}
 			std::cin >> temp;
 			std::cout << std::endl;
 			temp2 = &tris::game[temp - 1];
+			done = true;
 			} while ((temp < 1 || temp > 9) || *temp2 != 0);
 		*temp2 = 2;
 		tris::turn = true;
+		done = false;
 	}
 }
 
