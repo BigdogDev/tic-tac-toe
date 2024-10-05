@@ -10,7 +10,6 @@ void tris::initializeGame() {
 	{
 		tris::game[i] = 0;
 	}
-	std::cout << "Draw, the game will restart" << std::endl << std::endl;
 	tris::turn = false;
 	tris::moves = 0;
 }
@@ -121,16 +120,42 @@ void tris::play() {
 }
 
 void tris::winCheck() {
+	char wait;
 	if (WINCOND1)
 	{
-		std::cout << "Player O has won!" << std::endl;
+		std::cout << "Player O has won!" << std::endl << std::endl;
+		do
+		{
+			std::cout << "Press r to restart the game or e for quitting the game: ";
+			std::cin >> wait;
+		} while (wait != 'r' && wait != 'e');
+		if (wait == 'r') {
+			std::cout << std::endl << "Game restarted" << std::endl << std::endl;
+			tris::initializeGame();
+			tris::printGame();
+		}
+		else if (wait == 'e') {
 		exit(0);
+		}
 	}
 	else if (WINCOND2) {
-		std::cout << "Player X has won!" << std::endl;
-		exit(0);
+		std::cout << "Player X has won!" << std::endl << std::endl << "Press enter to close the game: ";
+		do
+		{
+			std::cout << "Press r to restart the game or e for quitting the game: ";
+			std::cin >> wait;
+		} while (wait != 'r' && wait != 'e');
+		if (wait == 'r') {
+			std::cout << std::endl << "Game restarted" << std::endl << std::endl;
+			tris::initializeGame();
+			tris::printGame();
+		}
+		else if (wait == 'e') {
+			exit(0);
+		}
 	}
 	else if (tris::moves == 8) {
+		std::cout << "Draw, the game will restart" << std::endl << std::endl;
 		tris::initializeGame();
 		tris::printGame();
 	}
